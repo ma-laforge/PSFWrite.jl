@@ -14,10 +14,10 @@ include("interface.jl")
 
 #==Un-"exported" symbols (symbols not exported to avoid collisions):
 ================================================================================
-	_open(filepath::AbstractString)::PSFWriter
+	_open(filepath::String)::PSFWriter
 
 Create a PSFSweptDataset:
-	dataset(sweep::Vector, sweepid::ASCIIString)::PSFSweptDataset
+	dataset(sweep::Vector, sweepid::String)::PSFSweptDataset
 ==#
 
 
@@ -25,7 +25,7 @@ Create a PSFSweptDataset:
 ================================================================================
 
 #Add another vector to be written:
-	Base.push!(ds::PSFSweptDataset, vec::Vector, id::ASCIIString)
+	Base.push!(ds::PSFSweptDataset, vec::Vector, id::String)
 
 #Write dataset to file:
 	Base.write(writer::PSFWriter, ds::PSFSweptDataset)

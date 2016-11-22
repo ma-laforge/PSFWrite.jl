@@ -5,10 +5,10 @@
 ===============================================================================#
 #Generate a data block to be written:
 #Un-exported (high likelyhood of collisions)
-dataset(sweep::Vector, sweepid::ASCIIString) =
+dataset(sweep::Vector, sweepid::String) =
 	PSFSweptDataset(VectorData(sweepid, sweep))
 
-Base.push!(ds::PSFSweptDataset, vec::Vector, id::ASCIIString) =
+Base.push!(ds::PSFSweptDataset, vec::Vector, id::String) =
 	push!(ds.vectorlist, VectorData(id, vec))
 
 
@@ -42,12 +42,12 @@ end
 
 #==Open/close functions
 ===============================================================================#
-function _open(filepath::AbstractString)
+function _open(filepath::String)
 	io = open(filepath, "w")
 	return PSFWriter(io)
 end
 
-function _open(fn::Function, filepath::AbstractString)
+function _open(fn::Function, filepath::String)
 	writer = _open(filepath)
 	try
 		fn(writer)

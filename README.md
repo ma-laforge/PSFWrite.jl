@@ -28,7 +28,7 @@ PSFWrite.jl does not currently support all .psf file capabilities, and might to 
 
 Extensive compatibility testing of PSFWrite.jl has not been performed.  The module has been tested using the following environment(s):
 
- - Linux / Julia-0.4.2 (64-bit) / Ubuntu
+ - Linux / Julia-0.5.0 (64-bit) / Ubuntu
 
 ## Disclaimer
 

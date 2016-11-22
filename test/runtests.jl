@@ -10,7 +10,7 @@ using LibPSF #To test validity
 
 #==Input data
 ===============================================================================#
-sampledata(filename::AbstractString) = joinpath(LibPSF.rootpath, "core/data", filename)
+sampledata(filename::String) = joinpath(LibPSF.rootpath, "core/data", filename)
 sepline = "---------------------------------------------------------------------"
 printsep() = println(sepline)
 

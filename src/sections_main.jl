@@ -4,9 +4,9 @@
 
 #==Other constructors
 ===============================================================================#
-DataTypeInfo(::Type{Float64}, id::PSFWord, name::ASCIIString) =
+DataTypeInfo(::Type{Float64}, id::PSFWord, name::String) =
 	DataTypeInfo(id, 0, TYPEID_FLOAT64, name, Property[], DataTypeInfo[])
-function DataTypeInfo(::Type{Float64}, id::PSFWord, name::ASCIIString, key::ASCIIString, units::ASCIIString)
+function DataTypeInfo(::Type{Float64}, id::PSFWord, name::String, key::String, units::String)
 	return DataTypeInfo(id, 0, TYPEID_FLOAT64, name,
 		Property[Property("key", key), Property("units", units)], DataTypeInfo[]
 	)

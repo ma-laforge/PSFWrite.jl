@@ -47,7 +47,7 @@ typealias Integer32 Union{Int32,UInt32}
 typealias Integer8 Union{Int8,UInt8}
 
 type Property
-	key::ASCIIString
+	key::String
 	value::Any
 end
 
@@ -56,24 +56,24 @@ type DataTypeInfo
 	isvector::PSFWord #Not sure what this is
 	typeid::PSFWord #TYPEID_*
 #	_size::PSFWord #Size: not written
-	name::ASCIIString
+	name::String
 	proplist::Vector{Property}
 	subtypelist::Vector{DataTypeInfo} #A struct is made up of subtypes
 end
 
 type DataInfo
 	id::PSFWord #Unique id? Maybe be a hash key?
-	name::ASCIIString
+	name::String
 	datatype::DataTypeInfo
 	proplist::Vector{Property}
 end
 
 type DataGroup
 	id::PSFWord
-	name::ASCIIString
+	name::String
 	datalist::Vector{DataInfo}
 end
-DataGroup(id::PSFWord, name::ASCIIString) = DataGroup(id, name, DataInfo[])
+DataGroup(id::PSFWord, name::String) = DataGroup(id, name, DataInfo[])
 
 #Sections
 #-------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ abstract AbstractSectionInfo
 type SectionInfo{ID} <: AbstractSectionInfo
 	offset::SizeT
 end
-call{ID}(::Type{SectionInfo{ID}}) = SectionInfo{ID}(0)
+(::Type{SectionInfo{ID}}){ID}() = SectionInfo{ID}(0)
 
 typealias SubSectionInfo SectionInfo{SECTIONID_SUBSECTION}
 
@@ -104,7 +104,7 @@ end
 IdGenerator() = IdGenerator(168068640)
 
 type VectorData
-	id::ASCIIString
+	id::String
 	v::Vector
 end
 
@@ -126,7 +126,7 @@ end
 
 #==Type identification functions
 ===============================================================================#
-psfpropertyid(::Type{ASCIIString}) = PROPTYPEID_STRING
+psfpropertyid(::Type{String}) = PROPTYPEID_STRING
 psfpropertyid{T<:Integer32}(::Type{T}) = PROPTYPEID_INT32
 psfpropertyid(::Type{Float64}) = PROPTYPEID_FLOAT64
 
@@ -171,7 +171,7 @@ function writeword{T<:Integer8}(io::IO, v::Vector{T})
 	zeroremaining(io, length(v), PSFWord)
 end
 
-function writeword(io::IO, s::ASCIIString)
+function writeword(io::IO, s::String)
 	strlen = length(s)
 	writeword(io, PSFWord(strlen))
 	writeword(io, convert(Vector{UInt8}, s))
