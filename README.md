@@ -12,15 +12,15 @@ Examples on how to use the PSFWrite.jl capabilities can be found under the [test
 <a name="Installation"></a>
 ## Installation
 
-		julia> Pkg.clone("https://github.com/ma-laforge/LibPSF.jl")
+		julia> Pkg.clone("https://github.com/ma-laforge/PSFWrite.jl")
 
 ## Known Limitations
 
-PSFWrite.jl is mostly compatible with Henrik Johansson's [libpsf](https://github.com/henjo/libpsf) library and the [Julia implementation](https://github.com/ma-laforge/LibPSF.jl).
+PSFWrite.jl was mostly validated against [LibPSF.jl](https://github.com/ma-laforge/LibPSF.jl): the pure-Julia implementation of Henrik Johansson's [libpsf](https://github.com/henjo/libpsf) library.  It might not be fully compliant with the PSF format.
 
 ### Missing Features
 
-PSFWrite.jl does not currently support all .psf file capabilities, and might to be fully compliant.
+PSFWrite.jl does not currently support all .psf file capabilities.
 
  - Only supports writing swept data in a windowed format.
 
