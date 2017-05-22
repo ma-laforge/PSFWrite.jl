@@ -1,8 +1,8 @@
 #PSFWrite: Base definitions
 #-------------------------------------------------------------------------------
 
-typealias PSFWord UInt32
-typealias SizeT Int
+const PSFWord = UInt32
+const SizeT = Int
 
 #==Constants
 ===============================================================================#
@@ -43,15 +43,15 @@ const ELEMID_ZEROPAD  = PSFWord(0x14)
 
 #==Main Types
 ===============================================================================#
-typealias Integer32 Union{Int32,UInt32}
-typealias Integer8 Union{Int8,UInt8}
+const Integer32 = Union{Int32,UInt32}
+const Integer8 = Union{Int8,UInt8}
 
-type Property
+mutable struct Property
 	key::String
 	value::Any
 end
 
-type DataTypeInfo
+mutable struct DataTypeInfo
 	id::PSFWord #Unique id? Maybe be a hash key?
 	isvector::PSFWord #Not sure what this is
 	typeid::PSFWord #TYPEID_*
@@ -61,14 +61,14 @@ type DataTypeInfo
 	subtypelist::Vector{DataTypeInfo} #A struct is made up of subtypes
 end
 
-type DataInfo
+mutable struct DataInfo
 	id::PSFWord #Unique id? Maybe be a hash key?
 	name::String
 	datatype::DataTypeInfo
 	proplist::Vector{Property}
 end
 
-type DataGroup
+mutable struct DataGroup
 	id::PSFWord
 	name::String
 	datalist::Vector{DataInfo}
@@ -77,19 +77,19 @@ DataGroup(id::PSFWord, name::String) = DataGroup(id, name, DataInfo[])
 
 #Sections
 #-------------------------------------------------------------------------------
-abstract AbstractSectionInfo
+abstract type AbstractSectionInfo end
 
-type SectionInfo{ID} <: AbstractSectionInfo
+mutable struct SectionInfo{ID} <: AbstractSectionInfo
 	offset::SizeT
 end
 (::Type{SectionInfo{ID}}){ID}() = SectionInfo{ID}(0)
 
-typealias SubSectionInfo SectionInfo{SECTIONID_SUBSECTION}
+const SubSectionInfo = SectionInfo{SECTIONID_SUBSECTION}
 
 #Maybe better not to make this a "Section"?:
-typealias IndexSectionInfo SectionInfo{SECTIONID_INDEX}
+const IndexSectionInfo = SectionInfo{SECTIONID_INDEX}
 
-type PrimarySectionInfo <: AbstractSectionInfo
+mutable struct PrimarySectionInfo <: AbstractSectionInfo
 	id::PSFWord
 	offset::SizeT
 end
@@ -98,24 +98,24 @@ PrimarySectionInfo(id::PSFWord) = PrimarySectionInfo(id, 0)
 #High-level writer
 #-------------------------------------------------------------------------------
 #Generates unique IDs
-type IdGenerator
+mutable struct IdGenerator
 	last::PSFWord
 end
 IdGenerator() = IdGenerator(168068640)
 
-type VectorData
+mutable struct VectorData
 	id::String
 	v::Vector
 end
 
-type PSFSweptDataset
+mutable struct PSFSweptDataset
 	sweep::VectorData
 	vectorlist::Vector{VectorData}
 end
 PSFSweptDataset(sweepvec::VectorData) =
 	PSFSweptDataset(sweepvec, VectorData[])
 
-type PSFWriter
+mutable struct PSFWriter
 	io::IOStream
 end
 

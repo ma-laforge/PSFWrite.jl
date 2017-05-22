@@ -23,8 +23,8 @@ t = collect(0:.01e-9:10e-9)
 
 #==Tests
 ===============================================================================#
-y1 = sin(t*(2pi*freq))
-y2 = cos(t*(2pi*freq))
+y1 = sin.(t*(2pi*freq))
+y2 = cos.(t*(2pi*freq))
 
 data = PSFWrite.dataset(t, "time")
 push!(data, y1, "y1")
