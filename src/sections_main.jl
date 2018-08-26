@@ -30,7 +30,7 @@ const DINFO_SWEEP = DataInfo(PSFWord(168068560), "time", DTINFO_SWEEP, [Property
 
 #==Helper functions
 ===============================================================================#
-Base.next(idgen::IdGenerator) = (idgen.last += 0x50) #Not sure about this
+_next(idgen::IdGenerator) = (idgen.last += 0x50)
 
 
 #==Write functions (Section info structures)
@@ -44,7 +44,7 @@ function writesectionid(io::IO, info::PrimarySectionInfo)
 	return info
 end
 #Also updates info with current position (offset):
-function writesectionid{T}(io::IO, info::SectionInfo{T})
+function writesectionid(io::IO, info::SectionInfo{T}) where T
 	info.offset = position(io)
 	writeword(io, T)
 	writeword(io, PSFWord(0)) #Skip over end position data
@@ -232,7 +232,7 @@ function writetraces(w::PSFWriter, ds::PSFSweptDataset)
 
 	grp = DataGroup(PSFWord(169835016), "group")
 	for vec in ds.vectorlist
-		data = DataInfo(next(idgen), vec, DTINFO_NODE)
+		data = DataInfo(_next(idgen), vec, DTINFO_NODE)
 		push!(grp.datalist, data)
 	end
 	__write(w.io, DataGroup[grp]) #Write array of groups (even if only 1)

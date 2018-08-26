@@ -1,6 +1,13 @@
 #PSFWrite: Write data to a Parameter Storage Format (PSF) file
 #-------------------------------------------------------------------------------
+#=
+TAGS:
+	#WANTCONST, HIDEWARN_0.7
+=#
+
 module PSFWrite
+
+import Dates: now
 
 include("base.jl")
 include("sections_main.jl")

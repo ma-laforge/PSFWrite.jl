@@ -82,7 +82,7 @@ abstract type AbstractSectionInfo end
 mutable struct SectionInfo{ID} <: AbstractSectionInfo
 	offset::SizeT
 end
-(::Type{SectionInfo{ID}}){ID}() = SectionInfo{ID}(0)
+(::Type{SectionInfo{ID}})() where ID = SectionInfo{ID}(0)
 
 const SubSectionInfo = SectionInfo{SECTIONID_SUBSECTION}
 
@@ -127,13 +127,13 @@ end
 #==Type identification functions
 ===============================================================================#
 psfpropertyid(::Type{String}) = PROPTYPEID_STRING
-psfpropertyid{T<:Integer32}(::Type{T}) = PROPTYPEID_INT32
+psfpropertyid(::Type{T}) where T<:Integer32 = PROPTYPEID_INT32
 psfpropertyid(::Type{Float64}) = PROPTYPEID_FLOAT64
 
 
 #==Basic functions
 ===============================================================================#
-poweroftwo{T<:Integer}(v::T) = v == (T(1)<<Int(log2(v)))
+poweroftwo(v::T) where T<:Integer = v == (T(1)<<Int(log2(v)))
 
 #Compute # of bytes remaining within word boundary after writing given amount of bytes:
 @assert(poweroftwo(sizeof(PSFWord)), "Algorithms expect sizeof(PSFWord) to be a power of two")
@@ -159,14 +159,14 @@ function writeword_atpos(io::IO, v::Integer32, pos::SizeT; restorepos=true)
 end
 
 #Zero-out remaining bytes to a word boundary (after writing nbytes):
-function zeroremaining{WORDT}(io::IO, nbytes::Integer, ::Type{WORDT})
+function zeroremaining(io::IO, nbytes::Integer, ::Type{WORDT}) where WORDT
 	rmg = bytesremaining(nbytes, WORDT)
 	for i in 1:rmg 
 		write(io, UInt8(0))
 	end
 end
 
-function writeword{T<:Integer8}(io::IO, v::Vector{T})
+function writeword(io::IO, v::Vector{T}) where T<:Integer8
 	write(io, v)
 	zeroremaining(io, length(v), PSFWord)
 end
@@ -174,7 +174,7 @@ end
 function writeword(io::IO, s::String)
 	strlen = length(s)
 	writeword(io, PSFWord(strlen))
-	writeword(io, convert(Vector{UInt8}, s))
+	writeword(io, convert(Vector{UInt8}, codeunits(s)))
 end
 
 #==Write functions (Data types)

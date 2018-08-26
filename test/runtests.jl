@@ -48,7 +48,7 @@ _y2 = read(reader, "y2")
 @show _y2
 close(reader)
 
-flush(STDOUT)
+flush(stdout)
 
 :Test_Complete
 

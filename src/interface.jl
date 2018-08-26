@@ -16,7 +16,7 @@ Base.push!(ds::PSFSweptDataset, vec::Vector, id::String) =
 ===============================================================================#
 
 function Base.write(w::PSFWriter, ds::PSFSweptDataset)
-	const wndsize = SizeT(0x1000)
+	wndsize = SizeT(0x1000) #WANTCONST
 	infolist = PrimarySectionInfo[]
 
 	seekend(w.io)
@@ -35,7 +35,7 @@ function Base.write(w::PSFWriter, ds::PSFSweptDataset)
 	#Write trailing info:
 	trailinginfostart = position(w.io)
 	__write(w.io, infolist) #Write section info
-	writeword(w.io, convert(Vector{UInt8}, PSF_STAMP))
+	writeword(w.io, convert(Vector{UInt8}, codeunits(PSF_STAMP)))
 	writeword(w.io, PSFWord(trailinginfostart))
 end
 

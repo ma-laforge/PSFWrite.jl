@@ -62,14 +62,14 @@ Might need correcting
 		writeword(w.io, ELEMID_DATA)
 		writeword(w.io, PSFWord(nval))
 
-		for i in offset+(1:nval)
+		for i in offset .+ (1:nval)
 			writeword(w.io, Float64(ds.sweep.v[i]))
 		end
 		writebyte(w.io, UInt8(0), npad)
 
 		for vec in ds.vectorlist
 			writebyte(w.io, UInt8(0), reservedsize)
-			for i in offset+(1:nval)
+			for i in offset .+ (1:nval)
 				writeword(w.io, Float64(vec.v[i]))
 			end
 			writebyte(w.io, UInt8(0), npad)
