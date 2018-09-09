@@ -1,5 +1,7 @@
 # PSFWrite.jl
 
+[![Build Status](https://travis-ci.org/ma-laforge/PSFWrite.jl.svg?branch=master)](https://travis-ci.org/ma-laforge/PSFWrite.jl)
+
 ## Description
 
 The PSFWrite.jl module provides a pure-Julia .psf writer.
@@ -29,7 +31,3 @@ PSFWrite.jl does not currently support all .psf file capabilities.
 Extensive compatibility testing of PSFWrite.jl has not been performed.  The module has been tested using the following environment(s):
 
  - Linux / Julia-0.7.0 (64-bit) / Ubuntu
-
-## Disclaimer
-
-This software is provided "as is", with no guarantee of correctness.  Use at own risk.
