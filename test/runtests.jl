@@ -8,17 +8,11 @@ using Test
 
 #==Input data
 ===============================================================================#
-sampledata(filename::String) = joinpath(LibPSF.rootpath, "core/data", filename)
-sepline = "---------------------------------------------------------------------"
-printsep() = println(sepline)
-
 filepath = "testfile.psf"
-
 freq = 1e9
-#t = collect(0:.1e-9:10e-9)
 t = collect(0:.01e-9:10e-9)
-y1 = sin.(t*(2pi*freq))
-y2 = cos.(t*(2pi*freq))
+y1 = sin.(t*(2π*freq))
+y2 = cos.(t*(2π*freq))
 
 
 #==Tests
